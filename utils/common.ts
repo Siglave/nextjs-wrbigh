@@ -1,5 +1,5 @@
 /**
- * ???
+ * Foo permet d'enlever les doublons dans une Array
  */
 export const foo = <I>(z: I[]) => [...new Set(z)];
 
@@ -10,7 +10,7 @@ export const bar = <O, K extends keyof O>(a: O, ...b: K[]) =>
   Object.fromEntries(b.map((c) => [c, a[c]])) as Pick<O, K>;
 
 /**
- * ???
+ * Permet de retourner la valeur à l'index a de l'array b
  */
 export const boo = <
   K extends string | number,
