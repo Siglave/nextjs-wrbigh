@@ -15,15 +15,44 @@ type Directory = {
  * Return a list of every files filtered by given function.
  */
 export const visitFiles = (
-  root: unknown, // TODO
-  filterFn: unknown // TODO
-): unknown[] => {
-  // TODO
+  root: Directory | File,
+  filterFn: (file: File) => boolean
+): File[] => {
+  const fileList = [];
+
+  const getFilesFromDirectory = (item: Directory | File) => {
+    if (item.type === 'file') {
+      fileList.push(item);
+    } else {
+      item.children.forEach((child) => {
+        getFilesFromDirectory(child);
+      });
+    }
+  };
+  getFilesFromDirectory(root);
+
+  return fileList.filter(filterFn);
 };
 
 // Use example
 const filteredFiles = visitFiles(
-  null, // TODO use a concrete root example
+  {
+    type: 'directory',
+    name: 'C',
+    children: [
+      {
+        type: 'directory',
+        name: 'GAMES',
+        children: [
+          { type: 'file', name: 'sc2' },
+          { type: 'file', name: 'cs2' },
+          { type: 'file', name: 'valorant' },
+        ],
+      },
+      { type: 'file', name: 'test.txt' },
+      { type: 'file', name: 'js' },
+    ],
+  },
   (file) => {
     const name = file.name;
 
